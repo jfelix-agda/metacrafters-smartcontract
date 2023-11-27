@@ -6,6 +6,8 @@ pragma solidity ^0.8.9;
 contract Assessment {
     address payable public owner;
     uint256 public balance;
+    uint public convert;
+    uint public eth = 0;
 
     event Deposit(uint256 amount);
     event Withdraw(uint256 amount);
@@ -56,5 +58,14 @@ contract Assessment {
 
         // emit the event
         emit Withdraw(_withdrawAmount);
+    }
+
+    function setEtherValue(uint _value) public {
+        eth = _value;
+        assert(eth>0);
+    } 
+
+    function getEtherValue() public view returns(uint){
+        return eth;
     }
 }

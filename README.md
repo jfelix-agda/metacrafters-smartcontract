@@ -1,5 +1,10 @@
-# Starter Next/Hardhat Project
+# Metacrafters ETH + AVAX Project
+This is a project for the assessment portion of the Metacrafters course *Smart Contract Management - ETH + AVAX*.
 
+# Description
+This project was created to demonstrate creation and deployments of smart contracts with Hardhat.
+
+# Getting Started
 After cloning the github, you will want to do the following to get the code running on your computer.
 
 1. Inside the project directory, in the terminal type: npm i
@@ -10,3 +15,6 @@ After cloning the github, you will want to do the following to get the code runn
 
 After this, the project will be running on your localhost. 
 Typically at http://localhost:3000/
+
+# Authors
+jfelix-agda

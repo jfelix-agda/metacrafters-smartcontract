@@ -7,6 +7,8 @@ export default function HomePage() {
   const [account, setAccount] = useState(undefined);
   const [atm, setATM] = useState(undefined);
   const [balance, setBalance] = useState(undefined);
+  const [ethValue, setETHValue] = useState(0);
+  const [convertedValue, setValue] = useState(0);
 
   const contractAddress = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
   const atmABI = atm_abi.abi;
@@ -59,6 +61,13 @@ export default function HomePage() {
     }
   }
 
+  const getETH = async() => {
+    if (atm) {
+      setETHValue((await atm.getEtherValue()).toNumber());
+    }
+  }
+  
+
   const deposit = async() => {
     if (atm) {
       let tx = await atm.deposit(1);
@@ -72,6 +81,24 @@ export default function HomePage() {
       let tx = await atm.withdraw(1);
       await tx.wait()
       getBalance();
+    }
+  }
+
+  // Conversion Calculator
+  const convert = async() => {
+    const userInput = document.getElementById("convert");
+    const num = ((userInput.value)*ethValue).toLocaleString("en-us");
+    setValue(num);
+  }
+
+  // Set 1 ETH value to PHP
+  const setETH = async() => {
+    const userInput = document.getElementById("setValue");
+    const num = userInput.value;
+    if (atm) {
+      let tx = await atm.setEtherValue(num);
+      await tx.wait()
+      getETH();
     }
   }
 
@@ -95,7 +122,22 @@ export default function HomePage() {
         <p>Your Account: {account}</p>
         <p>Your Balance: {balance}</p>
         <button onClick={deposit}>Deposit 1 ETH</button>
-        <button onClick={withdraw}>Withdraw 1 ETH</button>
+        <button onClick={withdraw}>Withdraw 1 ETH</button><br></br>
+        <hr class="rounded"></hr>
+
+
+        <br></br>
+        <p>Current ETH value to PHP : {ethValue}</p>
+        <p>Set ETH to PHP Value</p>
+        <input type="text" id="setValue" name="fname"></input><br></br>
+        <button onClick={setETH}>Set</button>
+
+        <br></br>
+        <p>Convert ETH to PHP</p>
+        <input type="text" id="convert" name="fname"></input><br></br>
+        <button onClick={convert}>Convert</button>
+        <p id="display">Value: PHP {convertedValue}</p>
+
       </div>
     )
   }
